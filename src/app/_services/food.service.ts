@@ -7,18 +7,21 @@ import { Food } from '@app/_models/food';
 
 @Injectable({ providedIn: 'root' })
 export class FoodService {
-    private foodSubject: BehaviorSubject<Food>;
-    public food: Observable<Food>;
+    private _food: BehaviorSubject<Food[]> = new BehaviorSubject<Food[]>([]);
+    readonly food = this._food.asObservable();
 
     constructor(private http: HttpClient) {}
 
-    public get getFood(): Food {
-        return this.foodSubject.value;
-    }
-
     fetchFood() {
-      return this.http.get<Food[]>(`${environment.apiUrl}/api/food`);
+      this.http.get<Food[]>(`${environment.apiUrl}/api/food`).subscribe(
+        data => {
+          this._food.next(data);
+        },
+        error => console.log('Could not load food.')
+      );
     }
 
-
+    saveFood(food: Food) {
+      return this.http.post(`${environment.apiUrl}/api/food`, food);
+    }
 }

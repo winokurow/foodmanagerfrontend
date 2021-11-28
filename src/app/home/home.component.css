@@ -4,10 +4,35 @@ body {
 
 }
 
+.panel {
+  display: block;
+  height:auto;
+  bottom:0;
+  top:0;
+  left:0;
+  right:0;
+  margin-top:10px;
+  margin-bottom:10px;
+  margin-right:10px;
+  margin-left:10px;
+}
+
+mat-header-cell {
+  color: black;
+  background-color: darkgray;
+}
+
+.mat-button {
+  margin-bottom: 10px;
+}
+
 @media screen and (max-width: 960px) {
+
+
+
   .mat-table {
     border: 0;
-    vertical-align: middle
+    vertical-align: middle;
   }
 
   .mat-table caption {
@@ -42,5 +67,30 @@ body {
   }
     .mat-table .mat-cell:first-child {
     margin-top: 4%;
+  }
+
+  .mobile-label {
+    margin-right: 5%;
+  }
+
+
+  .extra-width {
+    flex-grow: 1.2;
+  }
+
+  .mat-header-cell:first-of-type {
+    padding-left: 4px
+  }
+
+  .mat-header-cell:last-of-type {
+    padding-right: 4px
+  }
+
+  mat-cell:first-of-type:first-of-type {
+    padding-left: 0px
+  }
+
+  mat-cell:last-of-type:last-of-type {
+    padding-right: 0px
   }
 }

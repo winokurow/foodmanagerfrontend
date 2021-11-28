@@ -5,16 +5,16 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Food } from '@app/_models/food';
-import {MatTableModule} from '@angular/material/table'
 import { DialogBoxComponent } from '@app/dialog-box/dialog-box.component';
 import { MatDialog } from '@angular/material/dialog';
+import { PlacesService } from '@app/_services/places.service';
 @Component({
   templateUrl: 'home.component.html',
   styleUrls: [ './home.component.css' ]
  })
 export class HomeComponent implements AfterViewInit {
 
-  options={
+  options = {
     timeOut: 3000,
     showProgressBar: true,
     pauseOnHover: true,
@@ -27,22 +27,17 @@ export class HomeComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  food=[];
+  food = [];
 
-  constructor(private foodService: FoodService, public dialog: MatDialog) {
-    this.foodService.fetchFood()
-        .pipe(first())
-        .subscribe(food => {
-          this.food = food
-          this.dataSource = new MatTableDataSource(this.food);
-          console.log("Data SOurce1" + JSON.stringify(food, null, 4))
-          console.log(Array.isArray(food))
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
+  constructor(private foodService: FoodService, private placesService: PlacesService, public dialog: MatDialog) {
+    foodService.fetchFood();
+    foodService.food.subscribe(updatedFood => {
+      this.food = updatedFood;
+      this.dataSource = new MatTableDataSource(this.food);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
 
-          //console.log("Data SOurce2" + JSON.stringify(this.dataSource, null, 4))
-
-        });
 
   }
 
@@ -50,19 +45,21 @@ export class HomeComponent implements AfterViewInit {
 
   }
 
-  openDialog(action,obj) {
+  openDialog(action, obj) {
     obj.action = action;
     const dialogRef = this.dialog.open(DialogBoxComponent, {
       width: '250px',
-      data:obj
+      data : obj
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result.event == 'Add'){
-        //this.addRowData(result.data);
-      }else if(result.event == 'Update'){
+      if (result.event === 'Add') {
+        this.foodService.saveFood(result.data).subscribe(data => {
+          this.food.push(data);
+        });
+      }else if(result.event === 'Update'){
         //this.updateRowData(result.data);
-      }else if(result.event == 'Delete'){
+      }else if(result.event === 'Delete'){
         //this.deleteRowData(result.data);
       }
     });

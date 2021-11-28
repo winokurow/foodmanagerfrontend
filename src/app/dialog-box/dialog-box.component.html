@@ -1,24 +1,38 @@
 <!-- dialog-box.component.html -->
-<h1 mat-dialog-title>Row Action :: <strong>{{action}}</strong></h1>
+<h1 mat-dialog-title><strong>{{titleMap.get(action)}}</strong></h1>
 <div mat-dialog-content>
 
   <mat-form-field *ngIf="action != 'Delete'; else elseTemplate">
-    <input placeholder="{{action}} Name" matInput [(ngModel)]="local_data.name">
+    <input placeholder="{{action}} Name" matInput [(ngModel)]="local_data.name" [matAutocomplete]="auto" (ngModelChange)="filter($event)">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let name of filteredNames" [value]="name">
+        {{name}}
+     </mat-option>
+ </mat-autocomplete>
+ </mat-form-field>
+
+  <mat-form-field *ngIf="action != 'Delete'; else elseTemplate">
+    <textarea matInput placeholder="{{action}} Description" [(ngModel)]="local_data.description"></textarea>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="action != 'Delete'; else elseTemplate">
+    <mat-select [(value)]="local_data.placeId">
+      <mat-option *ngFor="let place of this.places" [value]="place.id">{{place.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="action != 'Delete'; else elseTemplate">
+    <input type="number" placeholder="{{action}} Quantity" matInput [(ngModel)]="local_data.quantity">
   </mat-form-field>
   <mat-form-field *ngIf="action != 'Delete'; else elseTemplate">
-    <input placeholder="{{action}} Description" matInput [(ngModel)]="local_data.description">
+    <input matInput [matDatepicker]="pickerValidDate" placeholder="{{action}} validDate" [(ngModel)]="local_data.validDate">
+    <mat-datepicker-toggle matSuffix [for]="pickerValidDate"></mat-datepicker-toggle>
+    <mat-datepicker #pickerValidDate></mat-datepicker>
   </mat-form-field>
   <mat-form-field *ngIf="action != 'Delete'; else elseTemplate">
-    <input placeholder="{{action}} Place name" matInput [(ngModel)]="local_data.placeName">
-  </mat-form-field>
-  <mat-form-field *ngIf="action != 'Delete'; else elseTemplate">
-    <input placeholder="{{action}} Quantity" matInput [(ngModel)]="local_data.quantity">
-  </mat-form-field>
-  <mat-form-field *ngIf="action != 'Delete'; else elseTemplate">
-    <input placeholder="{{action}} validDate" matInput [(ngModel)]="local_data.validDate">
-  </mat-form-field>
-  <mat-form-field *ngIf="action != 'Delete'; else elseTemplate">
-    <input placeholder="{{action}} alarmDate" matInput [(ngModel)]="local_data.alarmDate">
+    <input matInput [matDatepicker]="pickerAlarmDate" placeholder="{{action}} alarmDate" [(ngModel)]="local_data.alarmDate">
+    <mat-datepicker-toggle matSuffix [for]="pickerAlarmDate"></mat-datepicker-toggle>
+    <mat-datepicker #pickerAlarmDate></mat-datepicker>
   </mat-form-field>
 
   <ng-template #elseTemplate>

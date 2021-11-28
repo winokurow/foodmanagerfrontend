@@ -1,52 +1,66 @@
-<h1>Food</h1>
-<button mat-button (click)="openDialog('Add',{})" mat-flat-button color="primary">Add Food</button>
+<div class="panel">
+  <h1>Food Stocks</h1>
+  <button mat-button (click)="openDialog('Add',{})" mat-flat-button color="primary">Add Food</button>
 
-<div class="example-container mat-elevation-z8">
+  <div class="example-container mat-elevation-z8">
 
-  <mat-table [dataSource]="dataSource" matSort>
+    <mat-table [dataSource]="dataSource" matSort>
 
-        <!-- Name Column -->
-        <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-          <mat-cell *matCellDef="let row" data-label="name"> {{row.name}} </mat-cell>
-        </ng-container>
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+            <mat-cell *matCellDef="let row" data-label="name">
+              <span class="mobile-label">{{row.name}}</span>
+            </mat-cell>
+          </ng-container>
 
-        <!-- Quantity Column -->
-        <ng-container matColumnDef="quantity">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Quantity </mat-header-cell>
-          <mat-cell *matCellDef="let row" data-label="quantity"> {{row.quantity}} </mat-cell>
-        </ng-container>
+          <!-- Quantity Column -->
+          <ng-container matColumnDef="quantity">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Quantity </mat-header-cell>
+            <mat-cell *matCellDef="let row" data-label="quantity">
+              <span class="mobile-label">{{row.quantity}}</span>
+            </mat-cell>
+          </ng-container>
 
-        <!-- Description Column -->
-        <ng-container matColumnDef="description">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Description </mat-header-cell>
-          <mat-cell *matCellDef="let row" data-label="description"> {{row.description}} </mat-cell>
-        </ng-container>
+          <!-- Description Column -->
+          <ng-container matColumnDef="description">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class='extra-width'> Description </mat-header-cell>
+            <mat-cell *matCellDef="let row" data-label="description">
+              <span class="mobile-label">{{row.description}}</span>
+              </mat-cell>
+          </ng-container>
 
-          <!-- placeName Column -->
-          <ng-container matColumnDef="placeName">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Location </mat-header-cell>
-            <mat-cell *matCellDef="let row" data-label="placeName"> {{row.placeName}} </mat-cell>
-        </ng-container>
+            <!-- placeName Column -->
+            <ng-container matColumnDef="placeName">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Location </mat-header-cell>
+              <mat-cell *matCellDef="let row" data-label="placeName">
+                <span class="mobile-label">{{row.placeName}}</span>
+              </mat-cell>
+          </ng-container>
 
-          <!-- ValidDate Column -->
-          <ng-container matColumnDef="validDate">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> ValidDate </mat-header-cell>
-            <mat-cell *matCellDef="let row" data-label="validDate"> {{row.validDate}} </mat-cell>
-        </ng-container>
+            <!-- ValidDate Column -->
+            <ng-container matColumnDef="validDate">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Valid Date </mat-header-cell>
+              <mat-cell *matCellDef="let row" data-label="validDate">
+                <span class="mobile-label">{{row.validDate}}</span>
+              </mat-cell>
+          </ng-container>
 
-          <!-- AlarmDate Column -->
-          <ng-container matColumnDef="alarmDate">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> AlarmDate </mat-header-cell>
-            <mat-cell *matCellDef="let row" data-label="alarmDate"> {{row.alarmDate}} </mat-cell>
-        </ng-container>
+            <!-- AlarmDate Column -->
+            <ng-container matColumnDef="alarmDate">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Alarm Date </mat-header-cell>
+              <mat-cell *matCellDef="let row" data-label="alarmDate">
+                <span class="mobile-label">{{row.alarmDate}}</span>
+              </mat-cell>
+          </ng-container>
 
 
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;">
-        </mat-row>
+          <mat-header-row *matHeaderRowDef="displayedColumns" sticky></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;">
+          </mat-row>
 
-  </mat-table>
+    </mat-table>
 
-  <mat-paginator [pageSizeOptions]="[ 10, 25, 100]"></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[ 10, 25, 100]"></mat-paginator>
+  </div>
 </div>
