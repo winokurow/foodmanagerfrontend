@@ -1,42 +1,47 @@
 <!-- dialog-box.component.html -->
 <h1 mat-dialog-title><strong>{{titleMap.get(action)}}</strong></h1>
 <div mat-dialog-content>
-
-  <mat-form-field *ngIf="action != 'Delete'; else elseTemplate">
-    <input placeholder="{{action}} Name" matInput [(ngModel)]="local_data.name" [matAutocomplete]="auto" (ngModelChange)="filter($event)">
+  <div *ngIf="action != 'Delete'; else elseTemplate">
+  <mat-form-field>
+    <input placeholder="{{action}} Name" matInput [(ngModel)]="localData.foodStock.food.name" [matAutocomplete]="auto" (ngModelChange)="filter($event)">
     <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let name of filteredNames" [value]="name">
+      <mat-option *ngFor="let name of filteredNames" [value]="name" (onSelectionChange)="setParams(name)">
         {{name}}
      </mat-option>
  </mat-autocomplete>
  </mat-form-field>
 
-  <mat-form-field *ngIf="action != 'Delete'; else elseTemplate">
-    <textarea matInput placeholder="{{action}} Description" [(ngModel)]="local_data.description"></textarea>
+  <mat-form-field>
+    <textarea matInput placeholder="{{action}} Description" [(ngModel)]="localData.foodStock.food.description"></textarea>
   </mat-form-field>
 
-  <mat-form-field *ngIf="action != 'Delete'; else elseTemplate">
-    <mat-select [(value)]="local_data.placeId">
+  <mat-form-field>
+    <mat-select [(value)]="localData.foodStock.place.id">
       <mat-option *ngFor="let place of this.places" [value]="place.id">{{place.name}}</mat-option>
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field *ngIf="action != 'Delete'; else elseTemplate">
-    <input type="number" placeholder="{{action}} Quantity" matInput [(ngModel)]="local_data.quantity">
+  <mat-form-field>
+    <input type="number" placeholder="{{action}} Quantity" matInput [(ngModel)]="localData.foodStock.quantity">
   </mat-form-field>
-  <mat-form-field *ngIf="action != 'Delete'; else elseTemplate">
-    <input matInput [matDatepicker]="pickerValidDate" placeholder="{{action}} validDate" [(ngModel)]="local_data.validDate">
+
+  <mat-form-field>
+    <input placeholder="{{action}} units" matInput [(ngModel)]="localData.foodStock.food.units">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput [matDatepicker]="pickerValidDate" placeholder="{{action}} validDate" [(ngModel)]="localData.foodStock.validDate">
     <mat-datepicker-toggle matSuffix [for]="pickerValidDate"></mat-datepicker-toggle>
     <mat-datepicker #pickerValidDate></mat-datepicker>
   </mat-form-field>
-  <mat-form-field *ngIf="action != 'Delete'; else elseTemplate">
-    <input matInput [matDatepicker]="pickerAlarmDate" placeholder="{{action}} alarmDate" [(ngModel)]="local_data.alarmDate">
+  <mat-form-field>
+    <input matInput [matDatepicker]="pickerAlarmDate" placeholder="{{action}} alarmDate" [(ngModel)]="localData.foodStock.alarmDate">
     <mat-datepicker-toggle matSuffix [for]="pickerAlarmDate"></mat-datepicker-toggle>
     <mat-datepicker #pickerAlarmDate></mat-datepicker>
   </mat-form-field>
-
+  </div>
   <ng-template #elseTemplate>
-    Sure to delete <b>{{local_data.name}}</b>?
+    Sure to delete <b>{{localData.foodStock.food.name}}</b>?
   </ng-template>
 </div>
 <div mat-dialog-actions>

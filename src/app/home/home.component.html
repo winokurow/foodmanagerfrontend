@@ -1,16 +1,16 @@
 <div class="panel">
   <h1>Food Stocks</h1>
-  <button mat-button (click)="openDialog('Add',{})" mat-flat-button color="primary">Add Food</button>
+  <button mat-button (click)="openAddDialog()" mat-flat-button color="primary">Add Food</button>
 
   <div class="example-container mat-elevation-z8">
 
     <mat-table [dataSource]="dataSource" matSort>
 
           <!-- Name Column -->
-          <ng-container matColumnDef="name">
+          <ng-container matColumnDef="food.name">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-            <mat-cell *matCellDef="let row" data-label="name">
-              <span class="mobile-label">{{row.name}}</span>
+            <mat-cell *matCellDef="let row" data-label="food.name">
+              <span class="mobile-label">{{row.food.name}}</span>
             </mat-cell>
           </ng-container>
 
@@ -23,18 +23,18 @@
           </ng-container>
 
           <!-- Description Column -->
-          <ng-container matColumnDef="description">
+          <ng-container matColumnDef="food.description">
             <mat-header-cell *matHeaderCellDef mat-sort-header class='extra-width'> Description </mat-header-cell>
-            <mat-cell *matCellDef="let row" data-label="description">
-              <span class="mobile-label">{{row.description}}</span>
+            <mat-cell *matCellDef="let row" data-label="food.description">
+              <span class="mobile-label">{{row.food.description}}</span>
               </mat-cell>
           </ng-container>
 
             <!-- placeName Column -->
-            <ng-container matColumnDef="placeName">
+            <ng-container matColumnDef="place.name">
               <mat-header-cell *matHeaderCellDef mat-sort-header> Location </mat-header-cell>
-              <mat-cell *matCellDef="let row" data-label="placeName">
-                <span class="mobile-label">{{row.placeName}}</span>
+              <mat-cell *matCellDef="let row" data-label="place.name">
+                <span class="mobile-label">{{row.place.name}}</span>
               </mat-cell>
           </ng-container>
 
@@ -54,6 +54,14 @@
               </mat-cell>
           </ng-container>
 
+          <!-- Action Column -->
+          <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+            <mat-cell *matCellDef="let row" class="action-link">
+              <a (click)="openDialog('Update', row)">Edit</a> |
+              <a (click)="openDialog('Delete', row)">Delete</a>
+            </mat-cell>
+          </ng-container>
 
           <mat-header-row *matHeaderRowDef="displayedColumns" sticky></mat-header-row>
           <mat-row *matRowDef="let row; columns: displayedColumns;">

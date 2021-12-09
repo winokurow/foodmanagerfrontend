@@ -1,13 +1,12 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { FoodService } from '@app/_services/food.service';
-import { first } from 'rxjs/operators';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Food } from '@app/_models/food';
 import { DialogBoxComponent } from '@app/dialog-box/dialog-box.component';
 import { MatDialog } from '@angular/material/dialog';
-import { PlacesService } from '@app/_services/places.service';
+import { FoodStockService } from '@app/_services/foodstock.service';
+import { FoodStock } from '@app/_models/foodStock';
+import { FoodService } from '@app/_services/food.service';
 @Component({
   templateUrl: 'home.component.html',
   styleUrls: [ './home.component.css' ]
@@ -21,19 +20,19 @@ export class HomeComponent implements AfterViewInit {
     clickToClose: true
   };
 
-  displayedColumns = ['name', 'quantity', 'description', 'placeName', 'validDate', 'alarmDate'];
-  dataSource: MatTableDataSource<Food>;
+  displayedColumns = ['food.name', 'quantity', 'food.description', 'place.name', 'validDate', 'alarmDate', 'action'];
+  dataSource: MatTableDataSource<FoodStock>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  food = [];
+  foodStock = [];
 
-  constructor(private foodService: FoodService, private placesService: PlacesService, public dialog: MatDialog) {
-    foodService.fetchFood();
-    foodService.food.subscribe(updatedFood => {
-      this.food = updatedFood;
-      this.dataSource = new MatTableDataSource(this.food);
+  constructor(private foodStockService: FoodStockService, private foodService: FoodService, public dialog: MatDialog) {
+    foodStockService.fetchFoodStock();
+    foodStockService.foodStock.subscribe(updatedFood => {
+      this.foodStock = updatedFood;
+      this.dataSource = new MatTableDataSource(this.foodStock);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
@@ -45,8 +44,15 @@ export class HomeComponent implements AfterViewInit {
 
   }
 
-  openDialog(action, obj) {
-    obj.action = action;
+  openAddDialog() {
+    this.openDialog('Add', new FoodStock());
+  }
+
+  openDialog(action: string, foodStock : FoodStock) {
+    console.log(foodStock);
+    let obj : {action: string, foodStock: FoodStock} = {"action": action, "foodStock": foodStock};
+    console.log('3');
+    console.log(obj.foodStock);
     const dialogRef = this.dialog.open(DialogBoxComponent, {
       width: '250px',
       data : obj
@@ -54,13 +60,27 @@ export class HomeComponent implements AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result.event === 'Add') {
-        this.foodService.saveFood(result.data).subscribe(data => {
-          this.food.push(data);
+        this.foodStockService.saveFoodStock(result.data).subscribe(data => {
+          const newArray = [...this.foodStock];
+          newArray.push(data);
+          this.foodStockService.nextFoodStock(newArray);
         });
-      }else if(result.event === 'Update'){
-        //this.updateRowData(result.data);
-      }else if(result.event === 'Delete'){
-        //this.deleteRowData(result.data);
+      }
+      else if (result.event === 'Update'){
+        console.log("UPDATE " + JSON.stringify(result.data));
+        this.foodStockService.updateFoodStock(result.data).subscribe(data => {
+          const newArray = [...this.foodStock];
+          const objIndex = newArray.findIndex((obj => obj.id == result.data.id));
+          newArray[objIndex] = data;
+          this.foodStockService.nextFoodStock(newArray);
+        }, error => {console.log(error); });
+      } else if (result.event === 'Delete'){
+        this.foodStockService.deleteFoodStock(result.data.id).subscribe(data => {
+          const newArray = [...this.foodStock];
+          const objIndex = newArray.findIndex((obj => obj.id == result.data.id));
+          newArray.splice(objIndex, 1);
+          this.foodStockService.nextFoodStock(newArray);
+        }, error => {console.log(error); });
       }
     });
   }

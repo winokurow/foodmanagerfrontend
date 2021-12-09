@@ -16,12 +16,9 @@ export class FoodService {
       this.http.get<Food[]>(`${environment.apiUrl}/api/food`).subscribe(
         data => {
           this._food.next(data);
+          error => console.log(data);
         },
         error => console.log('Could not load food.')
       );
-    }
-
-    saveFood(food: Food) {
-      return this.http.post(`${environment.apiUrl}/api/food`, food);
     }
 }
