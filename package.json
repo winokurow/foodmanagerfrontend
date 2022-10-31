@@ -57,5 +57,5 @@
     "tslint": "~6.1.0",
     "typescript": "~4.3.5"
   },
-  "engines": { "node": "16.14.0", "npm": "7.24.1node-v" }
+  "engines": { "node": "16.14.0", "npm": "7.24.1" }
 }
