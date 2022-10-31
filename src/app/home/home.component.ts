@@ -29,7 +29,6 @@ export class HomeComponent implements AfterViewInit {
   foodStock = [];
 
   constructor(private foodStockService: FoodStockService, private foodService: FoodService, public dialog: MatDialog) {
-    foodStockService.fetchFoodStock();
     foodStockService.foodStock.subscribe(updatedFood => {
       this.foodStock = updatedFood;
       this.dataSource = new MatTableDataSource(this.foodStock);
@@ -49,10 +48,7 @@ export class HomeComponent implements AfterViewInit {
   }
 
   openDialog(action: string, foodStock : FoodStock) {
-    console.log(foodStock);
     let obj : {action: string, foodStock: FoodStock} = {"action": action, "foodStock": foodStock};
-    console.log('3');
-    console.log(obj.foodStock);
     const dialogRef = this.dialog.open(DialogBoxComponent, {
       width: '250px',
       data : obj

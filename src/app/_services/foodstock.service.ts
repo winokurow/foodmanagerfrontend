@@ -9,15 +9,18 @@ import { FoodStock } from '@app/_models/foodStock';
 @Injectable({ providedIn: 'root' })
 export class FoodStockService {
     private _foodStock: BehaviorSubject<FoodStock[]> = new BehaviorSubject<FoodStock[]>([]);
-    readonly foodStock = this._foodStock.asObservable();
+    readonly foodStock: Observable<FoodStock[]>  = this._foodStock.asObservable();
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {
+      this.fetchFoodStock();
+    }
 
     public get getFoodStock() {
       return this._foodStock.value;
     }
 
     public nextFoodStock(foodStock: FoodStock[]) {
+      console.log("foodStock" + foodStock);
       return this._foodStock.next(foodStock);
     }
 

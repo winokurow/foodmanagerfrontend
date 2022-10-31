@@ -1,0 +1,33 @@
+<div class="panel">
+  <h1>Places</h1>
+  <button mat-button (click)="openAddDialog()" mat-flat-button color="primary">Add Place</button>
+
+  <div class="example-container mat-elevation-z8">
+
+    <mat-table [dataSource]="dataSource" matSort>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+            <mat-cell *matCellDef="let row" data-label="name">
+              <span class="mobile-label">{{row.name}}</span>
+            </mat-cell>
+          </ng-container>
+
+          <!-- Action Column -->
+          <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+            <mat-cell *matCellDef="let row" class="action-link">
+
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns" sticky></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;">
+          </mat-row>
+
+    </mat-table>
+
+    <mat-paginator [pageSizeOptions]="[ 10, 25, 100]"></mat-paginator>
+  </div>
+</div>

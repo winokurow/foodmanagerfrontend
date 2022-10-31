@@ -10,15 +10,17 @@ import { HomeComponent } from './home/home.component';
 import { AlertComponent } from './_components/alert.component';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
-import { FlexLayoutModule } from "@angular/flex-layout";
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 import { AngularMaterialModule } from './angular-material.module';
+import { PlacesComponent } from './places/places.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AlertComponent,
     HomeComponent,
+    PlacesComponent,
     DialogBoxComponent
   ],
   imports: [

@@ -44,8 +44,7 @@ export class DialogBoxComponent implements OnInit{
 
     }
   ngOnInit(): void {
-    this.placesService.fetchPlaces()
-    .pipe(first())
+    this.placesService.places
     .subscribe(places => {
       this.places = places;
       console.log(this.places[0].name);
