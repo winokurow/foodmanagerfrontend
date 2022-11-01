@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://foood-manager.herokuapp.com/'
+  apiUrl: 'https://foood-manager.herokuapp.com'
 };
