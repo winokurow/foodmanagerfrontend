@@ -10,10 +10,11 @@ import { HomeComponent } from './home/home.component';
 import { AlertComponent } from './_components/alert.component';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 import { AngularMaterialModule } from './angular-material.module';
 import { PlacesComponent } from './places/places.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -29,9 +30,10 @@ import { PlacesComponent } from './places/places.component';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    FlexLayoutModule,
     FormsModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    MatPaginatorModule,
+    MatTableModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

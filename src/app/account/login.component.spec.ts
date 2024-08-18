@@ -29,7 +29,7 @@ let component: LoginComponent;
 
   });
 
-  it("should create Quote component", () => {
+it('should create Quote component', () => {
     expect(component).toBeTruthy();
   });
 
