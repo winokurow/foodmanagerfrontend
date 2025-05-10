@@ -1,1 +1,13 @@
 @import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
+
+.auto-width-dialog .mat-dialog-container {
+  max-width: none !important;      // kill the 80 vw cap
+width: fit-content !important;   // or 'max-content' for older browsers
+  /* optional: if you want to keep the usual 24 px padding:          */
+padding: 24px;                   // Material’s default is 24 px
+}
+
+/* keep the overlay pane itself from imposing a width */
+.auto-width-dialog.cdk-overlay-pane {
+  width: auto !important;
+}

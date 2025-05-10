@@ -6,43 +6,64 @@ import { DialogBoxComponent } from '@app/dialog-box/dialog-box.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Place } from '@app/_models/place';
 import { PlacesService } from '@app/_services/places.service';
+import {PlaceDialogBoxComponent} from '@app/places/dialogboxcomponent/place-dialog-box.component';
 
 @Component({
   templateUrl: 'places.component.html',
   styleUrls: [ './places.component.css' ]
  })
 export class PlacesComponent implements AfterViewInit {
-
-  options = {
-    timeOut: 3000,
-    showProgressBar: true,
-    pauseOnHover: true,
-    clickToClose: true
-  };
-
   displayedColumns = ['name', 'action'];
-  dataSource: MatTableDataSource<Place>;
+  dataSource = new MatTableDataSource<Place>([]);
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort)      sort!: MatSort;
 
-  places: Place[] = [];
+  constructor(
+    private placesService: PlacesService,
+    private dialog: MatDialog
+  ) {
+    // live data
+    this.placesService.places.subscribe(list => {
+      this.dataSource.data = list;
+      // paginator/sort can be undefined the first tick
+      if (this.paginator) { this.dataSource.paginator = this.paginator; }
+      if (this.sort) {      this.dataSource.sort      = this.sort; }
+    });
+  }
 
-  constructor(private placesService: PlacesService, public dialog: MatDialog) {
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort      = this.sort;
+  }
 
-    placesService.places.subscribe(updatedPlaces => {
-      this.places = updatedPlaces;
-      this.dataSource = new MatTableDataSource(this.places);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+  /* ---------- dialogs ---------- */
+  openAddDialog() {
+    const ref = this.dialog.open(PlaceDialogBoxComponent, {
+      width: '350px',
+      data: { action: 'Add', record: { name: '' } }
     });
 
-
+    ref.afterClosed().subscribe(async res => {
+      if (res?.event === 'Add') { await this.placesService.add(res.record); }
+    });
   }
-  ngAfterViewInit(): void {
+
+  openEditDialog(place: Place) {
+    const ref = this.dialog.open(PlaceDialogBoxComponent, {
+      width: '350px',
+      data: { action: 'Edit', record: { ...place } }
+    });
+
+    ref.afterClosed().subscribe(async res => {
+      if (res?.event === 'Edit')
+        await this.placesService.update(place.id, res.record);
+    });
   }
 
-  openAddDialog() {
-
+  async deletePlace(id: number) {
+    if (confirm('Really delete this place?')) {
+      await this.placesService.remove(id);
+    }
   }
 }

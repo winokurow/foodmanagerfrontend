@@ -1,4 +1,4 @@
 export class Place {
-  id: string;
+  id: number;
   name: string;
 }

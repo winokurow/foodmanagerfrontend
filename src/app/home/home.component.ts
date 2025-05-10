@@ -35,8 +35,6 @@ export class HomeComponent implements AfterViewInit {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
-
-
   }
 
   ngAfterViewInit() {
@@ -50,7 +48,7 @@ export class HomeComponent implements AfterViewInit {
   openDialog(action: string, foodStock : FoodStock) {
     let obj : {action: string, foodStock: FoodStock} = {"action": action, "foodStock": foodStock};
     const dialogRef = this.dialog.open(DialogBoxComponent, {
-      width: '250px',
+       panelClass: 'auto-width-dialog',
       data : obj
     });
 

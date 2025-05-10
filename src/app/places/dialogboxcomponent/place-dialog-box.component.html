@@ -1,0 +1,38 @@
+<form [formGroup]="form" class="dialog-form">
+
+  <h1 mat-dialog-title>{{ data.action }} Place</h1>
+
+  <mat-dialog-content>
+
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Name</mat-label>
+
+      <!-- move the binding here ↓↓↓ -->
+      <input matInput
+             formControlName="name"
+             autocomplete="off"
+             [errorStateMatcher]="errorMatcher" />
+
+      <mat-error *ngIf="form.get('name')?.hasError('required')">
+        Name is required
+      </mat-error>
+      <mat-error *ngIf="form.get('name')?.hasError('nameTaken')">
+        That name is already used
+      </mat-error>
+      <mat-error *ngIf="form.get('name')?.hasError('maxlength')">
+        Name can’t be longer than 64 characters
+      </mat-error>
+    </mat-form-field>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="dialogRef.close()">Cancel</button>
+    <button mat-raised-button color="primary"
+            (click)="save()"
+            [disabled]="form.invalid || form.pending">
+      {{ data.action }}
+    </button>
+  </mat-dialog-actions>
+
+</form>

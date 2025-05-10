@@ -14,17 +14,20 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^17.3.12",
-    "@angular/cdk": "^16.2.12",
-    "@angular/common": "^17.3.12",
-    "@angular/compiler": "^17.3.12",
-    "@angular/compiler-cli": "^17.3.12",
-    "@angular/core": "^17.3.12",
-    "@angular/forms": "^17.3.12",
-    "@angular/material": "^16.2.12",
-    "@angular/platform-browser": "^17.3.12",
-    "@angular/platform-browser-dynamic": "^17.3.12",
-    "@angular/router": "^17.3.12",
+    "@angular/animations": "^18.2.0",
+    "@angular/cdk": "^18.2.0",
+    "@angular/common": "^18.2.0",
+    "@angular/compiler": "^18.2.0",
+    "@angular/compiler-cli": "^18.2.0",
+    "@angular/core": "^18.2.0",
+    "@angular/forms": "^18.2.0",
+    "@angular/material": "^18.2.0",
+    "@angular/platform-browser": "^18.2.0",
+    "@angular/platform-browser-dynamic": "^18.2.0",
+    "@angular/router": "^18.2.0",
+    "@supabase/supabase-js": "^2.49.4",
+    "@types/node": "^18.19.64",
+    "@types/ws": "^8.5.4",
     "express": "^4.18.2",
     "install": "^0.13.0",
     "jasmine-core": "^3.9.0",
@@ -37,11 +40,10 @@
     "zone.js": "~0.14.10"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^17.3.8",
+    "@angular-devkit/build-angular": "^18.2.0",
     "@angular/cli": "^18.2.0",
     "@cypress/schematic": "^1.6.0",
     "@types/jasmine": "~3.6.0",
-    "@types/node": "^12.11.1",
     "codelyzer": "^6.0.2",
     "cypress": "^13.8.1",
     "jasmine-spec-reporter": "~5.0.0",
@@ -52,6 +54,11 @@
     "karma-jasmine-html-reporter": "^1.5.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0"
+  },
+  "overrides": {
+    "@supabase/supabase-js": {
+      "@supabase/gotrue-js": "2.61.0"
+    }
   },
   "engines": {
     "node": "16.14.0",
