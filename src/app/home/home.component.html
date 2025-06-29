@@ -1,74 +1,72 @@
 <div class="panel">
   <h1>Food Stocks</h1>
-  <button mat-button (click)="openAddDialog()" mat-flat-button color="primary">Add Food</button>
+  <button mat-flat-button color="primary" (click)="openAddDialog()">
+    <mat-icon class="mr-1">add</mat-icon>
+    Add Food
+  </button>
 
   <div class="example-container mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort class="full-width">
 
-    <mat-table [dataSource]="dataSource" matSort>
+      <!-- Name -->
+      <ng-container matColumnDef="food.name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+        <td mat-cell *matCellDef="let row">{{ row.food.name }}</td>
+      </ng-container>
 
-          <!-- Name Column -->
-          <ng-container matColumnDef="food.name">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-            <mat-cell *matCellDef="let row" data-label="food.name">
-              <span class="mobile-label">{{row.food.name}}</span>
-            </mat-cell>
-          </ng-container>
+      <!-- Quantity -->
+      <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Qty</th>
+        <td mat-cell *matCellDef="let row">{{ row.quantity }}</td>
+      </ng-container>
 
-          <!-- Quantity Column -->
-          <ng-container matColumnDef="quantity">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Quantity </mat-header-cell>
-            <mat-cell *matCellDef="let row" data-label="quantity">
-              <span class="mobile-label">{{row.quantity}}</span>
-            </mat-cell>
-          </ng-container>
+      <!-- Description -->
+      <ng-container matColumnDef="food.description">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
+        <td mat-cell *matCellDef="let row">{{ row.food.description }}</td>
+      </ng-container>
 
-          <!-- Description Column -->
-          <ng-container matColumnDef="food.description">
-            <mat-header-cell *matHeaderCellDef mat-sort-header class='extra-width'> Description </mat-header-cell>
-            <mat-cell *matCellDef="let row" data-label="food.description">
-              <span class="mobile-label">{{row.food.description}}</span>
-              </mat-cell>
-          </ng-container>
+      <!-- Location -->
+      <ng-container matColumnDef="place.name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Location</th>
+        <td mat-cell *matCellDef="let row">{{ row.place.name }}</td>
+      </ng-container>
 
-            <!-- placeName Column -->
-            <ng-container matColumnDef="place.name">
-              <mat-header-cell *matHeaderCellDef mat-sort-header> Location </mat-header-cell>
-              <mat-cell *matCellDef="let row" data-label="place.name">
-                <span class="mobile-label">{{row.place.name}}</span>
-              </mat-cell>
-          </ng-container>
+      <!-- Valid Date -->
+      <ng-container matColumnDef="validDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Valid</th>
+        <td mat-cell *matCellDef="let row">{{ row.validDate | date }}</td>
+      </ng-container>
 
-            <!-- ValidDate Column -->
-            <ng-container matColumnDef="validDate">
-              <mat-header-cell *matHeaderCellDef mat-sort-header> Valid Date </mat-header-cell>
-              <mat-cell *matCellDef="let row" data-label="validDate">
-                <span class="mobile-label">{{row.validDate}}</span>
-              </mat-cell>
-          </ng-container>
+      <!-- Alarm Date -->
+      <ng-container matColumnDef="alarmDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Alarm</th>
+        <td mat-cell *matCellDef="let row">{{ row.alarmDate | date }}</td>
+      </ng-container>
 
-            <!-- AlarmDate Column -->
-            <ng-container matColumnDef="alarmDate">
-              <mat-header-cell *matHeaderCellDef mat-sort-header> Alarm Date </mat-header-cell>
-              <mat-cell *matCellDef="let row" data-label="alarmDate">
-                <span class="mobile-label">{{row.alarmDate}}</span>
-              </mat-cell>
-          </ng-container>
+      <!-- Action -->
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Action</th>
+        <td mat-cell *matCellDef="let row" class="action-buttons">
+          <button mat-icon-button color="primary" (click)="openDialog('Update', row)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="openDialog('Delete', row)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
 
-          <!-- Action Column -->
-          <ng-container matColumnDef="action">
-            <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
-            <mat-cell *matCellDef="let row" class="action-link">
-              <a (click)="openDialog('Update', row)">Edit</a> |
-              <a (click)="openDialog('Delete', row)">Delete</a>
-            </mat-cell>
-          </ng-container>
+      <!-- rows -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns" sticky></tr>
+      <tr mat-row        *matRowDef="let row; columns: displayedColumns"></tr>
 
-          <mat-header-row *matHeaderRowDef="displayedColumns" sticky></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;">
-          </mat-row>
+      <!-- empty -->
+      <tr *matNoDataRow class="mat-row">
+        <td class="mat-cell" colspan="7">No food in stock</td>
+      </tr>
+    </table>
 
-    </mat-table>
-
-    <mat-paginator [pageSizeOptions]="[ 10, 25, 100]"></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[10, 25, 100]" showFirstLastButtons></mat-paginator>
   </div>
 </div>

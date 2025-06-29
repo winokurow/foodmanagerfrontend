@@ -2,7 +2,6 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { DialogBoxComponent } from '@app/dialog-box/dialog-box.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Place } from '@app/_models/place';
 import { PlacesService } from '@app/_services/places.service';

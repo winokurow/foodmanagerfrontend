@@ -1,11 +1,11 @@
-import { Food } from "./food";
-import { Place } from "./place";
+import {Food} from '@app/_models/food';
+import {Place} from '@app/_models/place';
 
 export class FoodStock {
-  id: string;
+  id: number;
   food: Food;
   place: Place;
-  quantity: string;
+  quantity: number;
   validDate: Date;
   alarmDate: Date;
 }

@@ -1,0 +1,16 @@
+.w-100 { width: 100%; }
+
+.dialog-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  mat-form-field {
+    flex: 1 1 200px;
+    min-width: 140px;
+  }
+  mat-form-field.w-100 { min-width: 260px; }
+}
+
+:host ::ng-deep .wide-dialog .mat-mdc-dialog-title + .mat-mdc-dialog-content {
+  padding-top: 24px; /* your desired value */
+}
